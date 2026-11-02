@@ -1,0 +1,8 @@
+<Application xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:themes="clr-namespace:Avalonia.Themes.Fluent;assembly=Avalonia.Themes.Fluent" x:Class="RepoUpdateManager.App">
+  <Application.Styles>
+    <themes:FluentTheme />
+    <Style Selector="Button.primary"><Setter Property="Background" Value="#DDEB4F"/><Setter Property="Foreground" Value="#13201D"/><Setter Property="FontWeight" Value="SemiBold"/></Style>
+    <Style Selector="Button.ghost"><Setter Property="Background" Value="Transparent"/><Setter Property="BorderBrush" Value="#31433D"/></Style>
+  </Application.Styles>
+</Application>
+

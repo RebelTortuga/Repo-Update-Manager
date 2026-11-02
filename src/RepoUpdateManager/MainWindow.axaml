@@ -1,0 +1,70 @@
+<Window xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" x:Class="RepoUpdateManager.MainWindow" x:CompileBindings="False" Width="1280" Height="820" MinWidth="980" MinHeight="640" Title="Repo-Update-Manager" Background="#111A17">
+  <Grid RowDefinitions="Auto,*,Auto" Margin="24">
+    <Grid ColumnDefinitions="*,Auto" Margin="0,0,0,20">
+      <StackPanel Spacing="4">
+        <TextBlock Text="RebelTortuga" Foreground="#DDEB4F" FontWeight="SemiBold" FontSize="15"/>
+        <TextBlock Text="Repo-Update-Manager" Foreground="#F1F5F3" FontWeight="Bold" FontSize="29"/>
+        <TextBlock Text="Track, manage, and update your repositories, AI skills, plugins, and tools—all in one place." Foreground="#A9B8B1" FontSize="14" TextWrapping="Wrap" MaxWidth="620"/>
+      </StackPanel>
+      <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="10" VerticalAlignment="Center">
+        <Button Classes="ghost" Content="Import" Click="Import_Click"/>
+        <Button Classes="ghost" Content="Export" Click="Export_Click"/>
+        <Button Classes="primary" Content="Check All Now" Click="CheckNow_Click"/>
+      </StackPanel>
+    </Grid>
+    <Grid Grid.Row="1" ColumnDefinitions="220,*,310">
+      <Border Background="#17231F" CornerRadius="14" Padding="14">
+        <StackPanel Spacing="7">
+          <TextBlock Text="COLLECTION" Foreground="#91A29A" FontSize="11" FontWeight="SemiBold"/>
+          <Button Classes="ghost" Content="All tracked items" HorizontalContentAlignment="Left"/>
+          <Button Classes="ghost" Content="AI skills" HorizontalContentAlignment="Left"/>
+          <Button Classes="ghost" Content="Plugins" HorizontalContentAlignment="Left"/>
+          <Button Classes="ghost" Content="Repositories" HorizontalContentAlignment="Left"/>
+          <Button Classes="ghost" Content="Manual tools" HorizontalContentAlignment="Left"/>
+          <Separator Margin="0,12"/>
+          <TextBlock Text="CHECKING" Foreground="#91A29A" FontSize="11" FontWeight="SemiBold"/>
+          <TextBlock Text="Weekly by default" Foreground="#D8E1DC"/>
+          <TextBlock Text="Checks stay read-only" Foreground="#A9B8B1" FontSize="12" TextWrapping="Wrap"/>
+          <CheckBox Name="WeeklyEnabledInput" Content="Enable weekly background check" IsChecked="True" Margin="0,8,0,0"/>
+          <TextBox Name="WeeklyTimeInput" PlaceholderText="09:00" Text="09:00"/>
+          <Button Classes="ghost" Content="Save weekly schedule" Click="SaveSchedule_Click"/>
+        </StackPanel>
+      </Border>
+      <Border Grid.Column="1" Background="#17231F" CornerRadius="14" Padding="18" Margin="18,0">
+        <Grid RowDefinitions="Auto,Auto,Auto,*">
+          <Grid ColumnDefinitions="*,Auto"><TextBlock Text="Tracked projects" FontSize="20" FontWeight="SemiBold" Foreground="#F1F5F3"/><TextBlock Grid.Column="1" Text="{Binding ItemSummary}" Foreground="#A9B8B1" VerticalAlignment="Center"/></Grid>
+          <Border Grid.Row="1" Background="#20302A" CornerRadius="8" Padding="10" Margin="0,15,0,10"><StackPanel Spacing="8"><TextBlock Text="Each row records the source, installed version, upstream version, and written status. Checks never modify anything; confirmed updates are limited to eligible Git worktrees." Foreground="#C5D0CA" TextWrapping="Wrap"/><StackPanel Orientation="Horizontal" Spacing="8"><Button Name="ViewRepositoryButton" Classes="ghost" Content="View repository" Click="ViewRepository_Click" IsEnabled="False"/><Button Name="ViewMatchButton" Classes="ghost" Content="View exact match" Click="ViewMatch_Click" IsEnabled="False"/><Button Name="InstructionsButton" Classes="ghost" Content="Update instructions" Click="Instructions_Click" IsEnabled="False"/></StackPanel></StackPanel></Border>
+          <Border Grid.Row="2" Background="#20302A" CornerRadius="8" Padding="10" Margin="0,0,0,10"><StackPanel Spacing="7"><Grid ColumnDefinitions="*,Auto"><TextBlock Text="Safe updates" Foreground="#F1F5F3" FontWeight="SemiBold"/><TextBlock Name="UpdatePlanSummary" Grid.Column="1" Foreground="#A9B8B1" Text="No update plan prepared."/></Grid><TextBlock Name="UpdatePlanDetail" Foreground="#A9B8B1" TextWrapping="Wrap" Text="Git fast-forward is available only for clean local Git worktrees that exactly match a checked GitHub commit. Other installations remain manual."/><StackPanel Orientation="Horizontal" Spacing="8"><Button Name="UpdateSelectedButton" Classes="ghost" Content="Update selected" Click="PrepareSelectedUpdate_Click" IsEnabled="False"/><Button Name="UpdateAllButton" Classes="ghost" Content="Update All" Click="PrepareAllUpdates_Click"/><CheckBox Name="ConfirmUpdatesCheck" Content="I approve these local Git updates" IsEnabled="False"/><Button Name="RunUpdatesButton" Classes="primary" Content="Update" Click="RunUpdates_Click" IsEnabled="False"/></StackPanel></StackPanel></Border>
+          <ListBox Name="ItemsList" Grid.Row="3" ItemsSource="{Binding Items}" SelectionChanged="Items_SelectionChanged" Background="Transparent" BorderThickness="0">
+            <ListBox.ItemTemplate><DataTemplate><Border BorderBrush="#2B3B35" BorderThickness="0,0,0,1" Padding="4,13"><Grid ColumnDefinitions="*,130,120">
+              <StackPanel Spacing="3"><TextBlock Text="{Binding Name}" FontWeight="SemiBold" Foreground="#F1F5F3"/><TextBlock Text="{Binding Owner}" Foreground="#A9B8B1" FontSize="12"/><TextBlock Text="{Binding Detail}" Foreground="#91A29A" FontSize="12" TextWrapping="Wrap"/></StackPanel>
+              <StackPanel Grid.Column="1"><TextBlock Text="Installed" Foreground="#91A29A" FontSize="11"/><TextBlock Text="{Binding InstalledVersion}" Foreground="#D8E1DC"/><TextBlock Text="Latest" Foreground="#91A29A" FontSize="11" Margin="0,5,0,0"/><TextBlock Text="{Binding LatestVersion}" Foreground="#DDEB4F"/></StackPanel>
+              <TextBlock Grid.Column="2" Text="{Binding State}" Foreground="#DDEB4F" FontWeight="SemiBold" VerticalAlignment="Center" TextAlignment="Right" TextWrapping="Wrap"/>
+            </Grid></Border></DataTemplate></ListBox.ItemTemplate>
+          </ListBox>
+        </Grid>
+      </Border>
+      <Border Grid.Column="2" Background="#17231F" CornerRadius="14" Padding="18">
+        <ScrollViewer><StackPanel Spacing="9"><TextBlock Name="FormTitle" Text="Add a project" FontSize="20" FontWeight="SemiBold" Foreground="#F1F5F3"/><TextBlock Text="Paste a GitHub repository URL, then tell the app what is installed." Foreground="#A9B8B1" TextWrapping="Wrap" Margin="0,0,0,5"/>
+          <TextBlock Text="Display name" Foreground="#C5D0CA"/><TextBox Name="NameInput" PlaceholderText="Impeccable skill"/>
+          <TextBlock Text="GitHub repository URL" Foreground="#C5D0CA"/><TextBox Name="UrlInput" PlaceholderText="https://github.com/owner/repository"/>
+          <TextBlock Text="Installed version (optional)" Foreground="#C5D0CA"/><TextBox Name="VersionInput" PlaceholderText="4.8.0"/>
+          <TextBlock Text="Release stream pattern (optional)" Foreground="#C5D0CA"/><TextBox Name="PatternInput" PlaceholderText="skill-v*"/>
+          <TextBlock Text="Local path (optional)" Foreground="#C5D0CA"/><TextBox Name="PathInput" PlaceholderText="C:\\Tools\\example"/>
+          <TextBlock Text="Tracking type" Foreground="#C5D0CA"/><ComboBox Name="KindInput" SelectedIndex="0"><ComboBoxItem Content="AI skill"/><ComboBoxItem Content="Repository"/><ComboBoxItem Content="Plugin"/><ComboBoxItem Content="Manual tool"/></ComboBox>
+          <TextBlock Text="Upstream source" Foreground="#C5D0CA"/><ComboBox Name="SourceInput" SelectedIndex="0"><ComboBoxItem Content="GitHub releases"/><ComboBoxItem Content="GitHub tags"/><ComboBoxItem Content="Latest commit"/><ComboBoxItem Content="npm package"/></ComboBox>
+          <Button Name="SaveButton" Classes="primary" Content="Add to tracker" Click="Save_Click" Margin="0,8,0,0"/>
+          <StackPanel Orientation="Horizontal" Spacing="8"><Button Name="DeleteButton" Classes="ghost" Content="Delete selected" Click="Delete_Click" IsVisible="False"/><Button Name="CancelEditButton" Classes="ghost" Content="Cancel edit" Click="CancelEdit_Click" IsVisible="False"/></StackPanel>
+          <Separator Margin="0,8"/>
+          <TextBlock Text="Verified update" Foreground="#C5D0CA" FontWeight="SemiBold"/>
+          <TextBlock Name="VerificationHint" Text="Select an available update to record it only after you have installed and verified it yourself." Foreground="#A9B8B1" TextWrapping="Wrap"/>
+          <CheckBox Name="VerifiedInstalledCheck" Content="I verified this version is installed" IsEnabled="False"/>
+          <Button Name="RecordVerifiedButton" Classes="ghost" Content="Record verified version" Click="RecordVerified_Click" IsEnabled="False"/>
+          <TextBlock Name="FormStatus" Foreground="#DDEB4F" TextWrapping="Wrap"/>
+        </StackPanel></ScrollViewer>
+      </Border>
+    </Grid>
+    <Border Grid.Row="2" Background="#17231F" CornerRadius="10" Padding="12" Margin="0,18,0,0"><TextBlock Name="StatusText" Text="Ready. Checks are read-only; confirmed updates are limited to eligible Git worktrees." Foreground="#C5D0CA"/></Border>
+  </Grid>
+</Window>
+
