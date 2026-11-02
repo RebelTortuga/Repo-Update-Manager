@@ -46,7 +46,7 @@
       </Border>
       <Border Grid.Column="2" Background="#17231F" CornerRadius="14" Padding="18">
         <ScrollViewer><StackPanel Spacing="9"><TextBlock Name="FormTitle" Text="Add a project" FontSize="20" FontWeight="SemiBold" Foreground="#F1F5F3"/><TextBlock Text="Paste a GitHub repository URL, then tell the app what is installed." Foreground="#A9B8B1" TextWrapping="Wrap" Margin="0,0,0,5"/>
-          <TextBlock Text="Display name" Foreground="#C5D0CA"/><TextBox Name="NameInput" PlaceholderText="Impeccable skill"/>
+          <TextBlock Text="Display name" Foreground="#C5D0CA"/><TextBox Name="NameInput" PlaceholderText="My project"/>
           <TextBlock Text="GitHub repository URL" Foreground="#C5D0CA"/><TextBox Name="UrlInput" PlaceholderText="https://github.com/owner/repository"/>
           <TextBlock Text="Installed version (optional)" Foreground="#C5D0CA"/><TextBox Name="VersionInput" PlaceholderText="4.8.0"/>
           <TextBlock Text="Release stream pattern (optional)" Foreground="#C5D0CA"/><TextBox Name="PatternInput" PlaceholderText="skill-v*"/>
