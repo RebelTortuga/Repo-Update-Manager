@@ -1,8 +1,0 @@
-{
-  "version": 1,
-  "mode": "operate",
-  "direction": "operations-ledger",
-  "seed": "seed:5832b07c97e8fc31",
-  "platform": "adaptive",
-  "notes": "Code-first desktop application. The user requested an AppGeek-inspired polished manager; no external visual assets were used."
-}

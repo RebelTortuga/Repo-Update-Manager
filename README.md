@@ -1,12 +1,20 @@
-# Repo-Update-Manager
+# RebelTortuga — Repo-Update-Manager
 
-**Created by RebelTortuga.** A free, open-source update manager for repositories, AI skills, plugins, and developer tools.
+A free, open-source Windows desktop app for tracking selected GitHub repositories, AI skills, plugins, developer tools, and npm packages.
 
 Source: <https://github.com/RebelTortuga/Repo-Update-Manager>
 
+## Download
+
+This is an early Windows preview. Download [Repo-Update-Manager-v0.1.0-win-x64-portable.zip](https://github.com/RebelTortuga/Repo-Update-Manager/releases/download/v0.1.0/Repo-Update-Manager-v0.1.0-win-x64-portable.zip), extract it, and run `Repo-Update-Manager.exe`. No .NET runtime installation is required.
+
+SHA-256: `866D5A8188F39726741F5AB6599AF0195EACDD89C933456F9508436102D93545`
+
+The app stores its data in `%LOCALAPPDATA%\RebelTortuga\RepoUpdateManager`; deleting the extracted folder does not delete that data.
+
 Windows is the first supported target; Avalonia keeps the UI architecture portable to Linux and macOS. This is an early release: it checks many sources, while only a deliberately narrow, confirmed Git fast-forward method can update automatically.
 
-## MVP capabilities
+## v0.1.0 capabilities
 
 - Add a GitHub project with an optional installed version and local path.
 - Classify it as a repository, AI skill, plugin, or manual tool.
@@ -33,12 +41,6 @@ dotnet test .\RepoUpdateManager.sln
 dotnet run --project .\src\RepoUpdateManager\RepoUpdateManager.csproj
 ```
 
-To test the stream-filter use case, add `https://github.com/pbakaus/impeccable`, set the installed version you recorded locally, and use `skill-v*` as the release stream. The app queries public GitHub release data and does not inspect or modify that local installation.
-
-## Portable Windows release
-
-Download `Repo-Update-Manager-v0.1.0-win-x64-portable.zip`, extract it anywhere, and run `Repo-Update-Manager.exe`. No .NET SDK or runtime installation is required. The portable app stores its SQLite database and settings in `%LOCALAPPDATA%\RebelTortuga\RepoUpdateManager`, so deleting the extracted folder does not delete your tracked data. To remove user data, delete that folder separately.
-
 ## Current limits
 
 - npm installation/update is intentionally disabled for this release. npm package checks and package links remain available, but update manually using your preferred package-management workflow.
@@ -46,12 +48,6 @@ Download `Repo-Update-Manager-v0.1.0-win-x64-portable.zip`, extract it anywhere,
 - GitHub releases, tags, and the latest commit can be selected for a tracked item. Release filtering is only meaningful for releases/tags.
 - GitHub authentication and packaged installers remain release-plan work.
 - Public GitHub checks are subject to GitHub rate limits; the app surfaces that condition rather than pretending the result is current.
-
-## Architecture
-
-- `src/RepoUpdateManager` — Avalonia desktop UI, SQLite persistence, GitHub update source, comparison/filter logic.
-- `tests/RepoUpdateManager.Tests` — unit coverage for version and stream-filter rules.
-- All upstream access is isolated in `GitHubUpdateSource`; platform-specific notifications and schedulers can be added behind interfaces without changing the comparison or storage model.
 
 ## Future Development
 
